@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { MotionConfig, AnimatePresence } from 'framer-motion'
 import LoadingScreen from './components/LoadingScreen.jsx'
-import Navbar from './components/Navbar.jsx'
+import Navbar from './components/NavBar.jsx'
 import Hero from './components/Hero.jsx'
 import About from './components/About.jsx'
 import Projects from './components/Projects.jsx'
