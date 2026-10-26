@@ -1,4 +1,3 @@
-
 import { useEffect, useRef } from 'react'
 
 const TAU = Math.PI * 2
@@ -20,7 +19,11 @@ export default function FaceField() {
       '(prefers-reduced-motion: reduce)'
     ).matches
     const coarsePointer = window.matchMedia('(pointer: coarse)').matches
-    const still = reducedMotion || coarsePointer
+
+    // Phones/tablets: interactive touch mode. Reduced motion stays static.
+    // Desktop (fine pointer) behaves exactly as before.
+    const touchMode = coarsePointer && !reducedMotion
+    const still = reducedMotion
     const dpr = Math.min(window.devicePixelRatio || 1, 2)
 
     let width = 0
@@ -33,12 +36,27 @@ export default function FaceField() {
     let mouseY = -10000
     let hovered = false
 
+    // Touch-mode state (plain variables, no React state per frame)
+    let formed = false
+    let touchActive = false
+    let focusX = 0
+    let focusY = 0
+    let lastTime = 0
+
     function randomBetween(min, max) {
       return min + Math.random() * (max - min)
     }
 
     function resize() {
       const rect = canvas.getBoundingClientRect()
+
+      // On phones, browser toolbars change the height while scrolling.
+      // Keep the particles instead of reshuffling them.
+      const keepParticles =
+        touchMode &&
+        particles.length > 0 &&
+        Math.abs(rect.width - width) < 1
+
       width = rect.width
       height = rect.height
 
@@ -47,6 +65,11 @@ export default function FaceField() {
       canvas.width = Math.round(width * dpr)
       canvas.height = Math.round(height * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
+
+      if (keepParticles) {
+        draw(performance.now())
+        return
+      }
 
       // Circle size adapts to the existing canvas dimensions.
       const radius = Math.min(width * 0.29, height * 0.39)
@@ -81,11 +104,20 @@ export default function FaceField() {
 
           if (Math.random() > keepChance) continue
 
+          const sx = randomBetween(0, width)
+          const sy = randomBetween(0, height)
+
           particles.push({
-            startX: randomBetween(0, width),
-            startY: randomBetween(0, height),
+            startX: sx,
+            startY: sy,
             homeX: centerX + px,
             homeY: centerY + py,
+            // touch mode: offset from the touch point + live position
+            offX: px,
+            offY: py,
+            x: sx,
+            y: sy,
+            speed: randomBetween(0.025, 0.075),
             radius: randomBetween(0.7, 1.45) *
               (1 + normalized * 0.18),
             alpha: randomBetween(0.65, 1),
@@ -108,11 +140,19 @@ export default function FaceField() {
         // Keep the scattered particles inside the canvas.
         if (x < 0 || x > width || y < 0 || y > height) continue
 
+        const sx = randomBetween(0, width)
+        const sy = randomBetween(0, height)
+
         particles.push({
-          startX: randomBetween(0, width),
-          startY: randomBetween(0, height),
+          startX: sx,
+          startY: sy,
           homeX: x,
           homeY: y,
+          offX: Math.cos(angle) * distance,
+          offY: Math.sin(angle) * distance,
+          x: sx,
+          y: sy,
+          speed: randomBetween(0.02, 0.06),
           radius: randomBetween(0.55, 1.2),
           alpha: randomBetween(0.18, 0.75),
           phase: Math.random() * TAU,
@@ -124,8 +164,45 @@ export default function FaceField() {
       draw(performance.now())
     }
 
+    // Touch mode: ease every particle toward its slot in a circle
+    // centered on the last touch point (or back to its scattered spot
+    // if nothing has been touched yet).
+    function updateTouch(time) {
+      const dt = lastTime ? Math.min((time - lastTime) / 16.67, 3) : 1
+      lastTime = time
+      const t = time * 0.00045
+
+      for (const p of particles) {
+        const base = p.type === 'core' ? 1.1 : 2.4
+        const amp = formed ? base : base * 2.5
+
+        const tx =
+          (formed ? focusX + p.offX : p.startX) +
+          Math.sin(t + p.phase) * amp
+        const ty =
+          (formed ? focusY + p.offY : p.startY) +
+          Math.cos(t * 0.9 + p.phase) * amp
+
+        const k = 1 - Math.pow(1 - p.speed, dt)
+        p.x += (tx - p.x) * k
+        p.y += (ty - p.y) * k
+      }
+    }
+
     function draw(time) {
       ctx.clearRect(0, 0, width, height)
+
+      if (touchMode) {
+        for (const p of particles) {
+          ctx.beginPath()
+          ctx.arc(p.x, p.y, p.radius, 0, TAU)
+          ctx.fillStyle = p.type === 'core'
+            ? `rgba(220,224,218,${p.alpha})`
+            : `rgba(190,198,187,${p.alpha})`
+          ctx.fill()
+        }
+        return
+      }
 
       const eased = smooth(progress)
       const t = time * 0.00045
@@ -165,7 +242,11 @@ export default function FaceField() {
     }
 
     function animate(time) {
-      progress += ((hovered ? 1 : 0) - progress) * 0.045
+      if (touchMode) {
+        updateTouch(time)
+      } else {
+        progress += ((hovered ? 1 : 0) - progress) * 0.045
+      }
       draw(time)
       raf = requestAnimationFrame(animate)
     }
@@ -180,8 +261,10 @@ export default function FaceField() {
       if (!running) return
       cancelAnimationFrame(raf)
       running = false
+      lastTime = 0
     }
 
+    // ---- Desktop handlers (unchanged) ----
     function onPointerMove(event) {
       const rect = canvas.getBoundingClientRect()
       mouseX = event.clientX - rect.left
@@ -199,6 +282,35 @@ export default function FaceField() {
       mouseX = mouseY = -10000
     }
 
+    // ---- Touch handlers (phones/tablets only) ----
+    function onTouchDown(event) {
+      if (event.pointerType === 'mouse') return
+      // Don't react to taps on links/buttons/inputs.
+      if (event.target.closest?.('a, button, input, textarea, select')) return
+
+      const rect = canvas.getBoundingClientRect()
+      const x = event.clientX - rect.left
+      const y = event.clientY - rect.top
+      if (x < 0 || x > width || y < 0 || y > height) return
+
+      formed = true
+      touchActive = true
+      focusX = x
+      focusY = y
+    }
+
+    function onTouchMove(event) {
+      if (!touchActive || event.pointerType === 'mouse') return
+      const rect = canvas.getBoundingClientRect()
+      focusX = Math.max(0, Math.min(width, event.clientX - rect.left))
+      focusY = Math.max(0, Math.min(height, event.clientY - rect.top))
+    }
+
+    function onTouchEnd() {
+      // Circle stays where it is until the next touch.
+      touchActive = false
+    }
+
     resize()
 
     const resizeObserver = new ResizeObserver(resize)
@@ -211,7 +323,12 @@ export default function FaceField() {
 
     intersectionObserver.observe(canvas)
 
-    if (!still) {
+    if (touchMode) {
+      window.addEventListener('pointerdown', onTouchDown, { passive: true })
+      window.addEventListener('pointermove', onTouchMove, { passive: true })
+      window.addEventListener('pointerup', onTouchEnd, { passive: true })
+      window.addEventListener('pointercancel', onTouchEnd, { passive: true })
+    } else if (!still) {
       window.addEventListener('pointermove', onPointerMove, {
         passive: true,
       })
@@ -224,6 +341,10 @@ export default function FaceField() {
       intersectionObserver.disconnect()
       window.removeEventListener('pointermove', onPointerMove)
       canvas.removeEventListener('pointerleave', onPointerLeave)
+      window.removeEventListener('pointerdown', onTouchDown)
+      window.removeEventListener('pointermove', onTouchMove)
+      window.removeEventListener('pointerup', onTouchEnd)
+      window.removeEventListener('pointercancel', onTouchEnd)
     }
   }, [])
 

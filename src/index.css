@@ -238,3 +238,60 @@ h3{font-size:1.4rem}h4{margin:22px 0 6px;color:var(--mute);font-weight:600}
 .dtile img,.dtile .dph{border:1.5px solid rgba(20,35,26,.35);transition:transform .6s,border-color .3s}
 .dtile:hover img{border-color:#14231a}
 
+.liquid-layer{position:absolute;inset:0;overflow:hidden;border-radius:inherit;pointer-events:none;z-index:1}
+.liquid-wave{position:absolute;width:var(--s);height:var(--s);transform:translate(-50%,-50%)}
+.liquid-wave i{
+  position:absolute;inset:0;opacity:0;transform:scale(0);
+  border-radius:46% 54% 52% 48% / 50% 46% 54% 50%;
+  background:radial-gradient(circle, transparent 56%, rgba(168,139,255,.38) 65%, rgba(255,255,255,.16) 70%, transparent 77%);
+  animation:liquid-expand 1100ms cubic-bezier(.2,.7,.2,1) forwards;
+}
+.liquid-wave i:nth-child(2){animation-delay:140ms;border-radius:52% 48% 47% 53% / 48% 53% 47% 52%}
+.liquid-wave i:nth-child(3){animation-delay:300ms;border-radius:48% 52% 53% 47% / 53% 47% 52% 48%}
+@keyframes liquid-expand{
+  0%{transform:scale(0) rotate(0);opacity:.9}
+  70%{opacity:.45}
+  100%{transform:scale(1) rotate(22deg);opacity:0}
+}
+
+/* press feedback (keeps your existing transitions) */
+button,.btn,.icon-btn,.chip,.pcard>article,.acard{-webkit-tap-highlight-color:transparent}
+.btn:active,.chip:active{transform:scale(.97,.94)}
+.icon-btn:active{transform:rotate(-12deg) scale(.94)}
+.pcard>article:active,.acard:active{transform:scale(.985,.97)}
+
+/* ---- phones & tablets (desktop unaffected) ---- */
+
+/* particles cover the whole hero so a touch anywhere forms the circle */
+@media (max-width:900px) and (pointer:coarse){
+  .face-field{top:0;bottom:auto;width:100%;height:100%;opacity:.55}
+}
+
+/* no stuck hover after a tap */
+@media (hover:none){
+  .pcard>article:hover,.acard:hover{transform:none;box-shadow:none;border-color:var(--line)}
+  .btn:hover,.icon-btn:hover{transform:none}
+  .hero-name:hover::before,.hero-name:hover::after{animation:none}
+}
+
+/* comfortable tap targets */
+@media (pointer:coarse){
+  .chip{min-height:44px}
+  .burger{min-width:44px;min-height:44px;padding:10px}
+  .close{padding:12px}
+  .nav-links a,.frow nav a{padding-block:10px}
+}
+
+/* small phones */
+@media (max-width:480px){
+  .wrap{width:min(1200px,100% - 32px)}
+  .hero .mega{font-size:clamp(3.6rem,17vw,4.8rem)}
+  .mega{font-size:clamp(3.2rem,14vw,4.8rem)}
+  .pcard .pmeta{flex-direction:column;gap:8px}
+  .acard{padding:22px}
+  .acard h3{font-size:1.6rem}
+  .tag.solid{white-space:normal}
+  .big-tags .tag{font-size:1rem;padding:8px 14px}
+  .row{gap:10px}
+  .btn{padding:13px 18px}
+}

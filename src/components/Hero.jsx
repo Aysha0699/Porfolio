@@ -4,6 +4,8 @@ import { profile } from '../data/portfolioData.js'
 import { HackerRankIcon, LeetCodeIcon, GithubIcon, LinkedInIcon } from './BrandIcons.jsx'
 import FaceField from './FaceField.jsx'
 
+
+
 export default function Hero() {
   const [first, last] = profile.name.split(' ')
   return (
