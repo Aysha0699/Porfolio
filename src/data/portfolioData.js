@@ -123,7 +123,7 @@ export const participations = [
 
 // Add Figma/poster screenshots to public/images and list them here, e.g. { title: 'Poster', image: '/images/poster1.png' }
 export const designWork = [
-  {  image: '/public/image1.jpeg', alt: 'Short description of the screen', link: '' },
-  {  image: '/public/image2.jpeg', alt: 'Short description of the design', link: '', fit: 'contain' },
-  {  image: '/public/image3.jpeg', alt: 'Short description of the poster', link: '' },
+  {  image: '/image1.jpeg', alt: 'Short description of the screen', link: '' },
+  {  image: '/image2.jpeg', alt: 'Short description of the design', link: '', fit: 'contain' },
+  {  image: '/image3.jpeg', alt: 'Short description of the poster', link: '' },
 ]
