@@ -9,7 +9,7 @@ export const profile = {
   linkedin: 'https://linkedin.com/in/aysha-henan',
   hackerrank: 'https://www.hackerrank.com/profile/ayshahenan15',
   leetcode: 'https://leetcode.com/u/Aysha_0699/',
-  cv: '/cv.pdf',
+  cv: `${import.meta.env.BASE_URL}cv.pdf`,
 }
 
 export const nav = ['Home', 'About', 'Projects', 'Skills', 'Experience', 'Achievements', 'Contact']
@@ -123,7 +123,7 @@ export const participations = [
 
 // Add Figma/poster screenshots to public/images and list them here, e.g. { title: 'Poster', image: '/images/poster1.png' }
 export const designWork = [
-  {  image: '/image1.jpeg', alt: 'Short description of the screen', link: '' },
-  {  image: '/image2.jpeg', alt: 'Short description of the design', link: '', fit: 'contain' },
-  {  image: '/image3.jpeg', alt: 'Short description of the poster', link: '' },
+  {  image: `${import.meta.env.BASE_URL}image1.jpeg`, alt: 'Short description of the screen', link: '' },
+  {  image: `${import.meta.env.BASE_URL}image2.jpeg`, alt: 'Short description of the design', link: '', fit: 'contain' },
+  {  image: `${import.meta.env.BASE_URL}image3.jpeg`, alt: 'Short description of the poster', link: '' },
 ]
