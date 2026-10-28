@@ -78,7 +78,7 @@ export const projects = [
 
   problem: 'Writing SQL queries can be challenging for beginners and time-consuming for experienced developers. SQLFLOW aims to bridge the gap between natural language and database queries by simplifying SQL generation.',
 
-  contribution: 'Solo project , 
+  contribution: 'Solo project ', 
   features: [
     'Natural-language-to-SQL generation',
     'SQL query display with syntax highlighting',
@@ -100,11 +100,11 @@ export const projects = [
   challenges: 'Designing an intuitive workflow for translating natural-language instructions into SQL while accounting for different SQL dialects, ambiguous requests, and potentially destructive queries. The project explores AI integration, prompt design, and interactive developer-tool interfaces.',
 
   repo: 'https://github.com/Aysha0699/SQL-Flow.git',
-  demo: 'https://sql-flow-zeta.vercel.app/',
-}
+  demo: 'https://sql-flow-zeta.vercel.app/', },
 
-  {
-    id: 'campusnavigator', title: 'Campus Navigator', category: 'Web', year: '', status: 'In progress',
+
+  
+   { id: 'campusnavigator', title: 'Campus Navigator', category: 'Web', year: '', status: 'In progress',
     tone: ['#1f3340', '#8fd3ff'], glyph: '⌖',
     summary: 'College navigation web app (work in progress).',
     overview: 'A college navigation web app built with React, Vite and Tailwind CSS. Still in development.',
