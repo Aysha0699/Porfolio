@@ -62,6 +62,47 @@ export const projects = [
     challenges: 'password-generation logic that used the user\’s details while keeping passwords readable, personalised, and sufficiently secureEDIT ME: add what was hard and what you learned.',
     repo: 'https://github.com/Aysha0699/Build-A-Key.git', demo: 'https://aysha0699.github.io/Build-A-Key/',
   },
+
+{
+  id: 'sqlflow',
+  title: 'SQLFLOW — AI QUERY Generator',
+  category: 'AI / Web',
+  year: '2026',
+  status: 'In progress',
+  tone: ['#050505', '#0047ab'],
+  glyph: '⛁',
+
+  summary: 'An AI-powered web application that converts natural-language instructions into SQL queries.',
+
+  overview: 'SQLFLOW is a natural-language-to-SQL web application designed to make database querying easier for developers, students, and data analysts. Users describe their requirements in plain English and receive corresponding SQL queries through a clean, modern interface.',
+
+  problem: 'Writing SQL queries can be challenging for beginners and time-consuming for experienced developers. SQLFLOW aims to bridge the gap between natural language and database queries by simplifying SQL generation.',
+
+  contribution: 'Solo project , 
+  features: [
+    'Natural-language-to-SQL generation',
+    'SQL query display with syntax highlighting',
+    'Support for multiple SQL dialects',
+    'Copy generated SQL to clipboard',
+    'Dark UI with electric-blue accents',
+    'Animated cursor trail'
+  ],
+
+  tech: [
+    'React',
+    'Next.js',
+    'TypeScript',
+    'Tailwind CSS',
+    'LLM API',
+    
+  ],
+
+  challenges: 'Designing an intuitive workflow for translating natural-language instructions into SQL while accounting for different SQL dialects, ambiguous requests, and potentially destructive queries. The project explores AI integration, prompt design, and interactive developer-tool interfaces.',
+
+  repo: 'https://github.com/Aysha0699/SQL-Flow.git',
+  demo: 'https://sql-flow-zeta.vercel.app/',
+}
+
   {
     id: 'campusnavigator', title: 'Campus Navigator', category: 'Web', year: '', status: 'In progress',
     tone: ['#1f3340', '#8fd3ff'], glyph: '⌖',
