@@ -68,7 +68,7 @@ export const projects = [
   title: 'SQLFLOW — AI QUERY Generator',
   category: 'AI / Web',
   year: '2026',
-  status: 'In progress',
+  status: 'Completed',
   tone: ['#050505', '#0047ab'],
   glyph: '⛁',
 
