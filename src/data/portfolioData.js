@@ -38,32 +38,6 @@ export const projects = [
     demoLabel: 'Watch Demo',
   },
   {
-    id: 'focusbruh', title: 'FocusBruh', category: 'Web', year: '2025', status: 'Completed',
-    tone: ['#1f3d2b', '#d4f57a'], glyph: '◉',
-    summary: 'Webcam-based distraction monitor that alerts you when you look away.',
-    overview: 'A distraction-monitoring web application built with HTML, CSS, JavaScript and Mediapipe to help users stay focused while studying or working.',
-    problem: 'Staying focused during long study or work sessions is hard, and distraction often goes unnoticed due to doom scrolling.',
-    contribution: 'Developed the application, including the detection logic and the focus-time settings.',
-    features: ['Webcam-based face and attention detection', 'Detects looking away or prolonged absence', 'Customisable study/work duration', 'Alerts during distraction events'],
-    tech: ['HTML', 'CSS', 'JavaScript', 'Mediapipe'],
-    challenges: 'EDIT ME: add what was hard and what you learned.',
-    repo: 'https://github.com/Aysha0699/FocusBRuh.git', demo: '',
-  },
-  
-  {
-    id: 'buildakey', title: 'Build-A-Key', category: 'Web', year: '2025', status: 'Completed',
-    tone: ['#3d2b1f', '#ffc46b'], glyph: '⌘',
-    summary: 'Responsive password generator with personalised suggestions.',
-    overview: 'A responsive password generator using HTML, CSS and JavaScript.',
-    problem: 'Memorable yet strong passwords are hard to create.',
-    contribution: 'Solo project.',
-    features: ['Suggestions from name, date of birth and car or phone number', 'Control over length, digit count and special characters', 'Multiple choices, regeneration and copying', 'Does not store user information or passwords'],
-    tech: ['HTML', 'CSS', 'JavaScript'],
-    challenges: 'password-generation logic that used the user\’s details while keeping passwords readable, personalised, and sufficiently secureEDIT ME: add what was hard and what you learned.',
-    repo: 'https://github.com/Aysha0699/Build-A-Key.git', demo: 'https://aysha0699.github.io/Build-A-Key/',
-  },
-
-{
   id: 'sqlflow',
   title: 'SQLFLOW — AI QUERY Generator',
   category: 'AI / Web',
@@ -100,10 +74,20 @@ export const projects = [
   challenges: 'Designing an intuitive workflow for translating natural-language instructions into SQL while accounting for different SQL dialects, ambiguous requests, and potentially destructive queries. The project explores AI integration, prompt design, and interactive developer-tool interfaces.',
 
   repo: 'https://github.com/Aysha0699/SQL-Flow.git',
-  demo: 'https://sql-flow-zeta.vercel.app/', },
+  demo: 'https://sql-flow-zeta.vercel.app/', },  
+   {
+    id: 'focusbruh', title: 'FocusBruh', category: 'Web', year: '2025', status: 'Completed',
+    tone: ['#1f3d2b', '#d4f57a'], glyph: '◉',
+    summary: 'Webcam-based distraction monitor that alerts you when you look away.',
+    overview: 'A distraction-monitoring web application built with HTML, CSS, JavaScript and Mediapipe to help users stay focused while studying or working.',
+    problem: 'Staying focused during long study or work sessions is hard, and distraction often goes unnoticed due to doom scrolling.',
+    contribution: 'Developed the application, including the detection logic and the focus-time settings.',
+    features: ['Webcam-based face and attention detection', 'Detects looking away or prolonged absence', 'Customisable study/work duration', 'Alerts during distraction events'],
+    tech: ['HTML', 'CSS', 'JavaScript', 'Mediapipe'],
+    challenges: 'EDIT ME: add what was hard and what you learned.',
+    repo: 'https://github.com/Aysha0699/FocusBRuh.git', demo: '',
+  },
 
-
-  
    { id: 'campusnavigator', title: 'Campus Navigator', category: 'Web', year: '', status: 'In progress',
     tone: ['#1f3340', '#8fd3ff'], glyph: '⌖',
     summary: 'College navigation web app (work in progress).',
@@ -114,6 +98,18 @@ export const projects = [
     tech: ['React', 'Vite', 'Tailwind CSS'],
     challenges: 'EDIT ME: add what was hard and what you learned.',
     repo: '', demo: '',
+  },
+  {
+    id: 'buildakey', title: 'Build-A-Key', category: 'Web', year: '2025', status: 'Completed',
+    tone: ['#3d2b1f', '#ffc46b'], glyph: '⌘',
+    summary: 'Responsive password generator with personalised suggestions.',
+    overview: 'A responsive password generator using HTML, CSS and JavaScript.',
+    problem: 'Memorable yet strong passwords are hard to create.',
+    contribution: 'Solo project.',
+    features: ['Suggestions from name, date of birth and car or phone number', 'Control over length, digit count and special characters', 'Multiple choices, regeneration and copying', 'Does not store user information or passwords'],
+    tech: ['HTML', 'CSS', 'JavaScript'],
+    challenges: 'password-generation logic that used the user\’s details while keeping passwords readable, personalised, and sufficiently secureEDIT ME: add what was hard and what you learned.',
+    repo: 'https://github.com/Aysha0699/Build-A-Key.git', demo: 'https://aysha0699.github.io/Build-A-Key/',
   },
 ]
 
